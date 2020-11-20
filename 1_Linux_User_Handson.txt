@@ -1,0 +1,563 @@
+1. Goto /home/hduser directory and Create 2 files namely cust1.txt and cust2.txt with the first 10 lines copied
+from /home/hduser/hive/data/custs and last 10 lines copied from /home/hduser/hive/data/custs.
+
+head -10 /home/hduser/hive/data/custs >cust1.txt
+tail -10 /home/hduser/hive/data/custs >cust2.txt
+
+head -20 /home/hduser/hive/data/custs | tail -8 >cust3.txt # Create new file for 12th to 20th line
+
+2. Create a file namely samplefile.txt using vi editor
+a. Type/copy 10 lines of some content
+b. Goto line 5 and remove line 5 to 7 using command.
+c. Goto last line and copy last line to first line and delete the last line manually.
+d. Find for a particular word inside the file
+e. Undo the last action you did
+f. Save and quit the file
+g. Open the file again, Delete 2 words in the last line and quit without saving
+ANS:
+ vi samplefile.txt
+a) Type/copy 10 lines of some content
+this is line1
+this is line2
+this is line3
+this is line4
+this is line5
+this is line6
+this is line7
+this is line8
+this is line9
+this is line10
+b) 3dd remove 3 lines from 5 to 7
+c) Copy current line "y" and paste starting of line "P" or paste endofline "p", Used "wd" command to delete particular word
+d) search word on file
+e) ctrl+u (undo), ctrl+r(redo)
+f) wq to save file
+g) Delete last 2 line using "2dd" command
+
+3. Merge the cust1.txt and cust2.txt in the name of custmerged.txt with cust2.txt contents first and cust1.txt
+content next
+
+##--Answer: Type 1
+
+[hduser@Inceptez ~]$ cat cust2.txt cust1.txt >custmerged1.txt
+[hduser@Inceptez ~]$ cat custmerged1.txt
+4009990,Stacey,Rouse,21,Actor
+4009991,Paul,Mullins,47,Reporter
+4009992,Erin,Blackwell,33,Electrician
+4009993,Becky,Wolfe,67,Musician
+4009994,Clyde,Welch,40,Photographer
+4009995,Rebecca,Dennis,37,Teacher
+4009996,Tonya,McIntosh,56,Engineering technician
+4009997,Ron,Grimes,36,Computer hardware engineer
+4009998,Tracey,Bullock,60,Computer hardware engineer
+4009999,Ray,Hewitt,64,Carpenter4000001,Kristina,Chung,55,Pilot
+4000002,Paige,Chen,74,Teacher
+4000003,Sherri,Melton,34,Firefighter
+4000004,Gretchen,Hill,66,Computer hardware engineer
+4000005,Karen,Puckett,74,Lawyer
+4000006,Patrick,Song,42,Veterinarian
+4000007,Elsie,Hamilton,43,Pilot
+4000008,Hazel,Bender,63,Carpenter
+4000009,Malcolm,Wagner,39,Artist
+4000010,Dolores,McLaughlin,60,Writer
+[hduser@Inceptez ~]$ wc -l custmerged1.txt
+19 custmerged1.txt
+[hduser@Inceptez ~]$
+
+[hduser@Inceptez ~]$ sed -e '$a\' cust2.txt > custmerged.txt
+[hduser@Inceptez ~]$ diff cust2.txt custmerged.txt
+10c10
+< 4009999,Ray,Hewitt,64,Carpenter
+\ No newline at end of file
+---
+> 4009999,Ray,Hewitt,64,Carpenter
+[hduser@Inceptez ~]$ cat custmerged.txt
+4009990,Stacey,Rouse,21,Actor
+4009991,Paul,Mullins,47,Reporter
+4009992,Erin,Blackwell,33,Electrician
+4009993,Becky,Wolfe,67,Musician
+4009994,Clyde,Welch,40,Photographer
+4009995,Rebecca,Dennis,37,Teacher
+4009996,Tonya,McIntosh,56,Engineering technician
+4009997,Ron,Grimes,36,Computer hardware engineer
+4009998,Tracey,Bullock,60,Computer hardware engineer
+4009999,Ray,Hewitt,64,Carpenter
+[hduser@Inceptez ~]$ cat cust1.txt >>custmerged.txt
+[hduser@Inceptez ~]$ cat custmerged.txt
+4009990,Stacey,Rouse,21,Actor
+4009991,Paul,Mullins,47,Reporter
+4009992,Erin,Blackwell,33,Electrician
+4009993,Becky,Wolfe,67,Musician
+4009994,Clyde,Welch,40,Photographer
+4009995,Rebecca,Dennis,37,Teacher
+4009996,Tonya,McIntosh,56,Engineering technician
+4009997,Ron,Grimes,36,Computer hardware engineer
+4009998,Tracey,Bullock,60,Computer hardware engineer
+4009999,Ray,Hewitt,64,Carpenter
+4000001,Kristina,Chung,55,Pilot
+4000002,Paige,Chen,74,Teacher
+4000003,Sherri,Melton,34,Firefighter
+4000004,Gretchen,Hill,66,Computer hardware engineer
+4000005,Karen,Puckett,74,Lawyer
+4000006,Patrick,Song,42,Veterinarian
+4000007,Elsie,Hamilton,43,Pilot
+4000008,Hazel,Bender,63,Carpenter
+4000009,Malcolm,Wagner,39,Artist
+4000010,Dolores,McLaughlin,60,Writer
+[hduser@Inceptez ~]$ wc -l custmerged.txt
+20 custmerged.txt
+[hduser@Inceptez ~]$
+
+##--Answer: Type 2
+4009992,Erin,Blackwell,33,Electrician
+4009993,Becky,Wolfe,67,Musician
+4009994,Clyde,Welch,40,Photographer
+4009995,Rebecca,Dennis,37,Teacher
+4009996,Tonya,McIntosh,56,Engineering technician
+4009997,Ron,Grimes,36,Computer hardware engineer
+4009998,Tracey,Bullock,60,Computer hardware engineer
+4009999,Ray,Hewitt,64,Carpenter
+4000001,Kristina,Chung,55,Pilot
+4000002,Paige,Chen,74,Teacher
+4000003,Sherri,Melton,34,Firefighter
+4000004,Gretchen,Hill,66,Computer hardware engineer
+4000005,Karen,Puckett,74,Lawyer
+4000006,Patrick,Song,42,Veterinarian
+4000007,Elsie,Hamilton,43,Pilot
+4000008,Hazel,Bender,63,Carpenter
+4000009,Malcolm,Wagner,39,Artist
+4000010,Dolores,McLaughlin,60,Writer
+[hduser@Inceptez ~]$ awk 1 cust2.txt  cust1.txt>cust4.txt
+[hduser@Inceptez ~]$ cat cust4.txt
+4009990,Stacey,Rouse,21,Actor
+4009991,Paul,Mullins,47,Reporter
+4009992,Erin,Blackwell,33,Electrician
+4009993,Becky,Wolfe,67,Musician
+4009994,Clyde,Welch,40,Photographer
+4009995,Rebecca,Dennis,37,Teacher
+4009996,Tonya,McIntosh,56,Engineering technician
+4009997,Ron,Grimes,36,Computer hardware engineer
+4009998,Tracey,Bullock,60,Computer hardware engineer
+4009999,Ray,Hewitt,64,Carpenter
+4000001,Kristina,Chung,55,Pilot
+4000002,Paige,Chen,74,Teacher
+4000003,Sherri,Melton,34,Firefighter
+4000004,Gretchen,Hill,66,Computer hardware engineer
+4000005,Karen,Puckett,74,Lawyer
+4000006,Patrick,Song,42,Veterinarian
+4000007,Elsie,Hamilton,43,Pilot
+4000008,Hazel,Bender,63,Carpenter
+4000009,Malcolm,Wagner,39,Artist
+4000010,Dolores,McLaughlin,60,Writer
+[hduser@Inceptez ~]$
+
+
+
+4. Count the number of lines in custmerged.txt and add the count in the last line of the custmerged.txt using
+command without using vi editor
+[hduser@Inceptez ~]$ wc -l custmerged.txt
+20 custmerged.txt
+[hduser@Inceptez ~]$ wc -l custmerged.txt >> custmerged.txt
+[hduser@Inceptez ~]$ cat custmerged.txt
+4009990,Stacey,Rouse,21,Actor
+4009991,Paul,Mullins,47,Reporter
+4009992,Erin,Blackwell,33,Electrician
+4009993,Becky,Wolfe,67,Musician
+4009994,Clyde,Welch,40,Photographer
+4009995,Rebecca,Dennis,37,Teacher
+4009996,Tonya,McIntosh,56,Engineering technician
+4009997,Ron,Grimes,36,Computer hardware engineer
+4009998,Tracey,Bullock,60,Computer hardware engineer
+4009999,Ray,Hewitt,64,Carpenter
+4000001,Kristina,Chung,55,Pilot
+4000002,Paige,Chen,74,Teacher
+4000003,Sherri,Melton,34,Firefighter
+4000004,Gretchen,Hill,66,Computer hardware engineer
+4000005,Karen,Puckett,74,Lawyer
+4000006,Patrick,Song,42,Veterinarian
+4000007,Elsie,Hamilton,43,Pilot
+4000008,Hazel,Bender,63,Carpenter
+4000009,Malcolm,Wagner,39,Artist
+4000010,Dolores,McLaughlin,60,Writer
+20 custmerged.txt
+[hduser@Inceptez ~]$
+
+5. Add a header as custno,firstname,lastname,age,profession in the first line of the custmerged.txt using command without using vi editor
+(Hint: Think of using tempfiles, first create a temp file with header, then add data, then move tempfile to final filename)
+[hduser@Inceptez ~]$ sed -i '1i custno,firstname,lastname,age,profession' custmerged.txt
+[hduser@Inceptez ~]$ cat custmerged.txt
+custno,firstname,lastname,age,profession
+4009990,Stacey,Rouse,21,Actor
+4009991,Paul,Mullins,47,Reporter
+4009992,Erin,Blackwell,33,Electrician
+4009993,Becky,Wolfe,67,Musician
+4009994,Clyde,Welch,40,Photographer
+4009995,Rebecca,Dennis,37,Teacher
+4009996,Tonya,McIntosh,56,Engineering technician
+4009997,Ron,Grimes,36,Computer hardware engineer
+4009998,Tracey,Bullock,60,Computer hardware engineer
+4009999,Ray,Hewitt,64,Carpenter
+4000001,Kristina,Chung,55,Pilot
+4000002,Paige,Chen,74,Teacher
+4000003,Sherri,Melton,34,Firefighter
+4000004,Gretchen,Hill,66,Computer hardware engineer
+4000005,Karen,Puckett,74,Lawyer
+4000006,Patrick,Song,42,Veterinarian
+4000007,Elsie,Hamilton,43,Pilot
+4000008,Hazel,Bender,63,Carpenter
+4000009,Malcolm,Wagner,39,Artist
+4000010,Dolores,McLaughlin,60,Writer
+20 custmerged.txt
+[hduser@Inceptez ~]$
+
+6. Find for the number of occurances of the word Pilot
+[hduser@Inceptez ~]$ grep 'Pilot' custmerged.txt
+4000001,Kristina,Chung,55,Pilot
+4000007,Elsie,Hamilton,43,Pilot
+[hduser@Inceptez ~]$
+
+
+7. Find for Pilot and replace with Aircraft Pilot in the custmerged.txt (use the commmand sed -i 's/Pilot/Aircraft Pilot/g' custmerged.txt)
+[hduser@Inceptez ~]$ sed -i 's/Pilot/Aircraft Pilot/g' custmerged.txt
+[hduser@Inceptez ~]$ grep 'Aircraft Pilot' custmerged.txt
+4000001,Kristina,Chung,55,Aircraft Pilot
+4000007,Elsie,Hamilton,43,Aircraft Pilot
+[hduser@Inceptez ~]$
+
+8. Count the number of words and lines in the custmerged.txt
+[hduser@Inceptez ~]$ wc custmerged.txt
+ 22  32 838 custmerged.txt
+22 -> # of line
+32 -> # of Words
+838 -> # of Bytes
+[hduser@Inceptez ~]$
+
+[hduser@Inceptez ~]$ wc -mwl custmerged.txt
+ 22  32 838 custmerged.txt
+[hduser@Inceptez ~]$ wc -mlw custmerged.txt
+ 22  32 838 custmerged.txt
+[hduser@Inceptez ~]$ wc -w custmerged.txt
+32 custmerged.txt
+[hduser@Inceptez ~]$
+
+option: no. of char(-m), no of line (-l), no of words(-w)
+
+9. List and display only the last file created. List and display only the last but one file created in the current
+folder.
+[hduser@Inceptez ~]$ ls -lrt *.txt| tail -1
+-rw-rw-r--  1 hduser   hduser     838 Jul 27 16:10 custmerged.txt
+[hduser@Inceptez ~]$
+
+[hduser@Inceptez ~]$ ls -lrt | tail -5
+-rw-rw-r--  1 hduser   hduser     326 Jul 27 15:38 cust3.txt
+-rw-rw-r--  1 hduser   hduser     394 Jul 27 15:38 cust2.txt
+-rw-rw-r--  1 hduser   hduser     356 Jul 27 15:38 cust1.txt
+-rw-rw-r--  1 hduser   hduser     838 Jul 27 16:10 custmerged.txt
+drwxr-xr-x. 3 hduser   hduser    4096 Jul 27 16:14 Downloads
+[hduser@Inceptez ~]$
+
+10. Copy the custmerged.txt in the name of custmeredcopied.txt retaining the timestamp of the original file in the copied file.
+[hduser@Inceptez ~]$ cp custmerged.txt custmeredcopied.txt
+[hduser@Inceptez ~]$ ls -lrt custmer*.txt
+-rw-rw-r-- 1 hduser hduser 750 Jul 27 15:36 custmerged1.txt
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:10 custmerged.txt
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:39 custmeredcopied.txt
+[hduser@Inceptez ~]$ 
+
+11. Goto /tmp directory, staying in /tmp , create directories inside /home/hduser path as src/custdata using 
+placeholder ~ , then goto /home/hduser/src/custdata,
+then goto /home path using absolute path method, come back to /home/hduser/src/custdata using the
+respective placeholder, go to 2 levels higher using the
+respective placeholder
+
+[hduser@Inceptez tmp]$ pwd
+/tmp
+[hduser@Inceptez tmp]$ mkdir ~/src/custdata
+mkdir: cannot create directory `/home/hduser/src/custdata': No such file or directory
+[hduser@Inceptez tmp]$ mkdir -p ~/src/custdata
+[hduser@Inceptez tmp]$ pwd
+/tmp
+[hduser@Inceptez tmp]$ cd /home/hduser/src/custdata
+[hduser@Inceptez custdata]$ pwd
+/home/hduser/src/custdata
+[hduser@Inceptez custdata]$
+
+
+12. Copy the custmerged.txt inside the /home/hduser/src/custdata and rename the directory custdata as customerdata
+
+[hduser@Inceptez custdata]$ ls -lrt
+total 4
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:55 custmerged.txt
+[hduser@Inceptez custdata]$ mv custmerged.txt customerdata.txt
+[hduser@Inceptez custdata]$ ls -lrt
+total 4
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:55 customerdata.txt
+[hduser@Inceptez custdata]$
+
+[hduser@Inceptez src]$ mv /home/hduser/src/custdata /home/hduser/src/customerdata
+[hduser@Inceptez src]$ ls -lrt
+total 4
+drwxrwxr-x 2 hduser hduser 4096 Jul 27 17:02 customerdata
+[hduser@Inceptez src]$
+
+
+13. Move & rename the /home/hduser/src/customerdata into the directory /tmp/custdata/process
+
+[hduser@Inceptez /]$ mkdir -p /tmp/custdata/process
+[hduser@Inceptez /]$ mv /home/hduser/src/customerdata/* /tmp/custdata/process
+[hduser@Inceptez /]$ cd /tmp/custdata/process
+[hduser@Inceptez process]$ ls -lrt
+total 4
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:55 customerdata.txt
+[hduser@Inceptez process]$ cd /
+[hduser@Inceptez /]$ cd ~
+[hduser@Inceptez ~]$ pwd
+/home/hduser
+[hduser@Inceptez ~]$ rm -r src
+[hduser@Inceptez ~]$ ls -lrt | tail -5
+-rw-rw-r--  1 hduser   hduser     394 Jul 27 15:38 cust2.txt
+-rw-rw-r--  1 hduser   hduser     356 Jul 27 15:38 cust1.txt
+-rw-rw-r--  1 hduser   hduser     838 Jul 27 16:10 custmerged.txt
+-rw-rw-r--  1 hduser   hduser     838 Jul 27 16:39 custmeredcopied.txt
+drwxr-xr-x. 3 hduser   hduser    4096 Jul 27 17:10 Downloads
+[hduser@Inceptez ~]$
+
+14. Create a zerobyte file namely success inside /tmp/custdata/process
+[hduser@Inceptez process]$ touch cust_zerobytefile.txt
+[hduser@Inceptez process]$ ls -lrt
+total 4
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:55 customerdata.txt
+-rw-rw-r-- 1 hduser hduser   0 Jul 27 17:41 cust_zerobytefile.txt
+[hduser@Inceptez process]$ pwd
+/tmp/custdata/process
+[hduser@Inceptez process]$
+
+15. Create a dir called /tmp/custdata/archive
+[hduser@Inceptez process]$ pwd
+/tmp/custdata/process
+[hduser@Inceptez process]$ mkdir -p /tmp/custdata/archive
+[hduser@Inceptez process]$ cd /tmp/custdata/archive
+[hduser@Inceptez archive]$ pwd
+/tmp/custdata/archive
+[hduser@Inceptez archive]$ 
+
+
+16. compress using gzip compression the /tmp/custdata/process/custmerged.txt file and move into
+/tmp/custdata/archive
+
+[hduser@Inceptez process]$ pwd
+/tmp/custdata/process
+[hduser@Inceptez process]$ mv customerdata.txt custmerged.txt
+[hduser@Inceptez process]$ ls -lrt
+total 8
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:55 customerdata.txt
+-rw-rw-r-- 1 hduser hduser   0 Jul 27 17:41 cust_zerobytefile.txt
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 17:49 custmerged.txt
+[hduser@Inceptez process]$ pwd
+/tmp/custdata/process
+[hduser@Inceptez process]$ gzip custmerged.txt
+[hduser@Inceptez process]$ ls -lrt
+total 8
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:55 customerdata.txt
+-rw-rw-r-- 1 hduser hduser   0 Jul 27 17:41 cust_zerobytefile.txt
+-rw-rw-r-- 1 hduser hduser 495 Jul 27 17:49 custmerged.txt.gz
+[hduser@Inceptez process]$ mv custmerged.txt.gz /tmp/custdata/archive
+[hduser@Inceptez process]$ ls -lrt
+total 4
+-rw-rw-r-- 1 hduser hduser 838 Jul 27 16:55 customerdata.txt
+-rw-rw-r-- 1 hduser hduser   0 Jul 27 17:41 cust_zerobytefile.txt
+
+
+
+16. Remove the /tmp/custdata/process directory.
+
+[hduser@Inceptez custdata]$ ls -lrt
+total 8
+drwxrwxr-x 2 hduser hduser 4096 Jul 27 17:51 process
+drwxrwxr-x 2 hduser hduser 4096 Jul 27 17:51 archive
+
+
+[hduser@Inceptez process]$ cd /tmp
+[hduser@Inceptez tmp]$ ls -lrt | tail -2
+drwx------  2 hduser hduser 4096 Jul 27 16:57 orbit-hduser
+drwxrwxr-x  4 hduser hduser 4096 Jul 27 17:43 custdata
+[hduser@Inceptez tmp]$ 
+[hduser@Inceptez tmp]$ rm -r /tmp/custdata/process
+[hduser@Inceptez tmp]$ ls -lrt | tail -2
+drwx------  2 hduser hduser 4096 Jul 27 16:57 orbit-hduser
+drwxrwxr-x  3 hduser hduser 4096 Jul 27 17:54 custdata
+[hduser@Inceptez tmp]$ cd custdata
+[hduser@Inceptez custdata]$ ls -lrt
+total 4
+drwxrwxr-x 2 hduser hduser 4096 Jul 27 17:51 archive
+[hduser@Inceptez custdata]$
+
+
+17. Create a user in your name, set password as hduser, switch user to the user created, create a file inside
+/tmp directory in your name logged in your name.
+
+[hduser@Inceptez ~]$ cd ~
+[hduser@Inceptez ~]$ pwd
+/home/hduser
+[hduser@Inceptez ~]$ 
+[hduser@Inceptez ~]$ sudo useradd nmohan
+[sudo] password for hduser: 
+[hduser@Inceptez ~]$
+
+[hduser@Inceptez home]$ ls -lrt
+total 16
+drwx------   4 nmohan   nmohan   4096 Jul 27 12:52 mohan
+drwx------   4 mrithyun mrithyun 4096 Jul 27 13:03 mrithyun
+drwx------. 48 hduser   hduser   4096 Jul 27 17:32 hduser
+drwx------   4 nmohan   nmohan   4096 Jul 27 18:28 nmohan
+[hduser@Inceptez home]$ sudo passwd nmohan
+Changing password for user nmohan.
+New password: 
+BAD PASSWORD: it is based on a dictionary word
+BAD PASSWORD: is too simple
+Retype new password: 
+passwd: all authentication tokens updated successfully.
+[hduser@Inceptez home]$ ls -lrt
+total 16
+drwx------   4 nmohan   nmohan   4096 Jul 27 12:52 mohan
+drwx------   4 mrithyun mrithyun 4096 Jul 27 13:03 mrithyun
+drwx------. 48 hduser   hduser   4096 Jul 27 17:32 hduser
+drwx------   4 nmohan   nmohan   4096 Jul 27 18:28 nmohan
+[hduser@Inceptez home]$ su nmohan
+Password: 
+[nmohan@Inceptez home]$ pwd
+home/nmohan
+[nmohan@Inceptez ~]$ cd /
+[nmohan@Inceptez /]$ cd tmp
+[nmohan@Inceptez tmp]$ ls -lrt
+total 92
+srwxrwxr-x. 1 hduser hduser    0 Aug 14  2015 gnome-system-monitor.hduser.1812114081
+drwx------  2 hduser hduser 4096 Aug 23  2015 keyring-Fs7nW3
+drwx------  2 hduser hduser 4096 Feb 13  2017 keyring-92rZZR
+drwx------  2 hduser hduser 4096 Feb 14  2017 keyring-1S21RE
+drwx------  2 hduser hduser 4096 Feb 15  2017 keyring-ycuk7e
+drwx------  2 hduser hduser 4096 May 13  2017 keyring-X8fce9
+drwx------  2 hduser hduser 4096 Aug 18  2017 keyring-CSF7b0
+drwx------  2 hduser hduser 4096 Aug 18  2017 keyring-19SWxa
+drwx------  2 hduser hduser 4096 Dec  4  2017 keyring-69qqcg
+drwx------  2 hduser hduser 4096 Jun 18  2018 keyring-g4ODtW
+drwx------  2 hduser hduser 4096 Aug 27  2019 keyring-XYABlA
+drwx------  2 hduser hduser 4096 Aug 29  2019 keyring-TvYrEe
+drwx------  2 hduser hduser 4096 Jul 26 07:04 keyring-HxDFMq
+drwx------  2 hduser hduser 4096 Jul 26 07:04 virtual-hduser.W3RXW2
+drwx------  2 gdm    gdm    4096 Jul 26 19:44 orbit-gdm
+drwx------  2 hduser hduser 4096 Jul 26 19:44 keyring-vZIKvF
+drwx------. 2 hduser hduser 4096 Jul 26 19:44 pulse-GQxX076q90w5
+drwx------  2 hduser hduser 4096 Jul 26 19:44 virtual-hduser.AJ60S9
+drwx------. 2 gdm    gdm    4096 Jul 26 19:44 pulse-kxPChsUMnwrb
+drwxr-xr-x  2 hduser hduser 4096 Jul 26 20:27 hsperfdata_hduser
+srwxrwxr-x  1 hduser hduser    0 Jul 26 20:51 gedit.hduser.406238794
+-rw-------  1 root   root   3814 Jul 27 04:43 yum_save_tx-2020-07-27-04-43tktHMr.yumtx
+drwxrwxr-x  4 hduser hduser 4096 Jul 27 05:07 dir6
+drwxrwxr-x  3 hduser hduser 4096 Jul 27 17:54 custdata
+drwx------  2 hduser hduser 4096 Jul 27 18:16 orbit-hduser
+[nmohan@Inceptez tmp]$ pwd
+/tmp
+[nmohan@Inceptez tmp]$ >test_nmohan.txt
+[nmohan@Inceptez tmp]$ ls -lrt test_nmohan.txt
+-rw-rw-r--  1 nmohan nmohan    0 Jul 27 18:38 test_nmohan.txt
+[nmohan@Inceptez tmp]$
+
+
+
+18. Remove write access for user using octal number and naming methods using chmod, try writing the file
+using vi editor
+
+[nmohan@Inceptez tmp]$  ls -lrt test_nmohan.txt
+-rw-rw-r-- 1 nmohan nmohan 0 Jul 27 18:38 test_nmohan.txt
+[nmohan@Inceptez tmp]$ chmod 444 test_nmohan.txt
+[nmohan@Inceptez tmp]$ ls -lrt test_nmohan.txt
+-r--r--r-- 1 nmohan nmohan 0 Jul 27 18:38 test_nmohan.txt
+[nmohan@Inceptez tmp]$ vi test_nmohan.txt  ## Giving an error readonly file
+[nmohan@Inceptez tmp]$ chmod u+w test_nmohan.txt
+[nmohan@Inceptez tmp]$ ls -lrt test_nmohan.txt
+-rw-r--r-- 1 nmohan nmohan 0 Jul 27 18:38 test_nmohan.txt
+[nmohan@Inceptez tmp]$ vi test_nmohan.txt
+
+[nmohan@Inceptez tmp]$ cat test_nmohan.txt
+Welcome to Linux CentOS
+[nmohan@Inceptez tmp]$
+
+
+19. Repeate the step 18 for other user also, you can use hduser as others here.
+[hduser@Inceptez tmp]$ cat test_nmohan.txt 
+Welcome to Linux CentOS
+[hduser@Inceptez tmp]$ ls -lrt test_nmohan.txt 
+-rw-r--r-- 1 nmohan nmohan 24 Jul 27 18:47 test_nmohan.txt
+[hduser@Inceptez tmp]$ whoami
+hduser
+[hduser@Inceptez tmp]$ chmod 444 test_nmohan.txt
+chmod: changing permissions of `test_nmohan.txt': Operation not permitted
+[hduser@Inceptez tmp]$
+
+[hduser@Inceptez tmp]$ ls -lrt test_nmohan.txt 
+-rw-r--r-- 1 nmohan nmohan 24 Jul 27 18:47 test_nmohan.txt
+[hduser@Inceptez tmp]$ whoami
+hduser
+[hduser@Inceptez tmp]$ sudo chgrp hduser test_nmohan.txt 
+[hduser@Inceptez tmp]$ ls -lrt test_nmohan.txt
+-rw-r--r-- 1 nmohan hduser 24 Jul 27 18:47 test_nmohan.txt
+[hduser@Inceptez tmp]$ chmod 444 test_nmohan.txt
+chmod: changing permissions of `test_nmohan.txt': Operation not permitted
+[hduser@Inceptez tmp]$ sudo chown hduser test_nmohan.txt
+[hduser@Inceptez tmp]$ ls -lrt test_nmohan.txt 
+-rw-r--r-- 1 hduser hduser 24 Jul 27 18:47 test_nmohan.txt
+[hduser@Inceptez tmp]$ chmod 444 test_nmohan.txt
+[hduser@Inceptez tmp]$ ls -lrt test_nmohan.txt
+-r--r--r-- 1 hduser hduser 24 Jul 27 18:47 test_nmohan.txt
+[hduser@Inceptez tmp]$ chmod u+wx test_nmohan.txt 
+[hduser@Inceptez tmp]$ ls -lrt test_nmohan.txt 
+-rwxr--r-- 1 hduser hduser 24 Jul 27 18:47 test_nmohan.txt
+[hduser@Inceptez tmp]$ chmod g+w test_nmohan.txt 
+[hduser@Inceptez tmp]$ ls -lrt test_nmohan.txt 
+-rwxrw-r-- 1 hduser hduser 24 Jul 27 18:47 test_nmohan.txt
+[hduser@Inceptez tmp]$ vi test_nmohan.txt 
+[hduser@Inceptez tmp]$ cat test_nmohan.txt
+Welcome to Linux CentOS
+Hello World
+[hduser@Inceptez tmp]$ 
+
+
+20. Create a local variable called welcomemessage="Welcome aspirants", convert it into environmental
+variable, check whether it is added in the env variable.
+
+[hduser@Inceptez ~]$ welcomemessage="Welcome aspirants"
+[hduser@Inceptez ~]$ echo $welcomemessage
+Welcome aspirants
+[hduser@Inceptez ~]$ export $welcomemessage
+[hduser@Inceptez ~]$ echo welcomemessage
+welcomemessage
+[hduser@Inceptez ~]$ echo $welcomemessage
+Welcome aspirants
+[hduser@Inceptez ~]$ export welcomemessage="Welcome aspirants"
+[hduser@Inceptez ~]$ echo welcomemessage
+welcomemessage
+[hduser@Inceptez ~]$ echo $welcomemessage
+Welcome aspirants
+[hduser@Inceptez ~]$
+
+
+21. Add the env variable into .bashrc profile and ensure the env variable is set every time.
+
+[hduser@Inceptez ~]$ tail -1 .bashrc
+export PATH=$PATH:/usr/local/spark/sbin
+[hduser@Inceptez ~]$ 
+[hduser@Inceptez ~]$ myname="MohanKNarayanan"
+[hduser@Inceptez ~]$ echo $myname
+MohanKNarayanan
+[hduser@Inceptez ~]$ export myname="MohanKNarayanan"
+[hduser@Inceptez ~]$ echo $myname
+MohanKNarayanan
+[hduser@Inceptez ~]$ echo 'export myname="MohanKNarayanan"'>>~/.bashrc
+[hduser@Inceptez ~]$ tail -1 .bashrc
+export myname="MohanKNarayanan"
+[hduser@Inceptez ~]$ tail -2 .bashrc
+export PATH=$PATH:/usr/local/spark/sbin
+export myname="MohanKNarayanan"
+[hduser@Inceptez ~]$
+

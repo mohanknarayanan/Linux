@@ -1,0 +1,180 @@
+[hduser@Inceptez ~]$ cd /home/cq0h
+bash: cd: /home/cq0h: No such file or directory
+[hduser@Inceptez ~]$ cd /home
+[hduser@Inceptez home]$ ls -lrt
+total 8
+drwxrwx---   4 hduser hduser 4096 Jul 27 12:52 mohan
+drwx------. 49 hduser hduser 4096 Aug  2 17:25 hduser
+[hduser@Inceptez home]$ sudo useradd mrithyunjay
+[sudo] password for hduser: 
+[hduser@Inceptez home]$ sudo passw mrithyunjay
+sudo: passw: command not found
+[hduser@Inceptez home]$ sudo passwd mrithyunjay
+Changing password for user mrithyunjay.
+New password: 
+Retype new password: 
+passwd: all authentication tokens updated successfully.
+[hduser@Inceptez home]$ ls -lart
+total 20
+drwxrwx---   4 hduser      hduser      4096 Jul 27 12:52 mohan
+dr-xr-xr-x. 25 root        root        4096 Aug  2 07:38 ..
+drwx------. 49 hduser      hduser      4096 Aug  2 17:25 hduser
+drwxr-xr-x.  5 root        root        4096 Aug  2 17:36 .
+drwx------   4 mrithyunjay mrithyunjay 4096 Aug  2 17:36 mrithyunjay
+[hduser@Inceptez home]$ cd mrithyunjay/
+bash: cd: mrithyunjay/: Permission denied
+[hduser@Inceptez home]$ su mrithyunjay/
+su: user mrithyunjay/ does not exist
+[hduser@Inceptez home]$ whoami
+hduser
+[hduser@Inceptez home]$ sudo usermod -a -G hduser mrithyunjay
+[hduser@Inceptez home]$ ls -lrt
+total 12
+drwxrwx---   4 hduser      hduser      4096 Jul 27 12:52 mohan
+drwx------. 49 hduser      hduser      4096 Aug  2 17:25 hduser
+drwx------   4 mrithyunjay mrithyunjay 4096 Aug  2 17:36 mrithyunjay
+[hduser@Inceptez home]$ su mrithyunjay/
+su: user mrithyunjay/ does not exist
+[hduser@Inceptez home]$ sudo su mrithyunjay/
+su: user mrithyunjay/ does not exist
+[hduser@Inceptez home]$ sudo su - mrithyunjay/
+su: user mrithyunjay/ does not exist
+[hduser@Inceptez home]$ sudo gpasswd -d mrithyunjay hduser
+Removing user mrithyunjay from group hduser
+[hduser@Inceptez home]$ ls -lrt
+total 12
+drwxrwx---   4 hduser      hduser      4096 Jul 27 12:52 mohan
+drwx------. 49 hduser      hduser      4096 Aug  2 17:25 hduser
+drwx------   4 mrithyunjay mrithyunjay 4096 Aug  2 17:36 mrithyunjay
+[hduser@Inceptez home]$ su mrithyunjay/
+su: user mrithyunjay/ does not exist
+[hduser@Inceptez home]$ id mrithyunjay/
+id: mrithyunjay/: No such user
+[hduser@Inceptez home]$ sudo usermod -a -G hduser mrithyunjay
+[hduser@Inceptez home]$ id mrithyunjay/
+id: mrithyunjay/: No such user
+[hduser@Inceptez home]$ id hduser
+uid=500(hduser) gid=500(hduser) groups=500(hduser),501(hadoop)
+[hduser@Inceptez home]$ id mohan
+uid=501(mohan) gid=502(mohan) groups=502(mohan)
+[hduser@Inceptez home]$ whoami
+hduser
+[hduser@Inceptez home]$ sudo su hduser
+******** Welcome to Inceptez Technologies ******** 
+[hduser@Inceptez home]$ whoami
+hduser
+[hduser@Inceptez home]$ cd /mrithyunjay
+bash: cd: /mrithyunjay: No such file or directory
+[hduser@Inceptez home]$ ls -lrt
+total 12
+drwxrwx---   4 hduser      hduser      4096 Jul 27 12:52 mohan
+drwx------. 49 hduser      hduser      4096 Aug  2 17:25 hduser
+drwx------   4 mrithyunjay mrithyunjay 4096 Aug  2 17:36 mrithyunjay
+[hduser@Inceptez home]$ su mrithyunjay/
+su: user mrithyunjay/ does not exist
+[hduser@Inceptez home]$ sudo userdel -d mohan
+userdel: invalid option -- 'd'
+Usage: userdel [options] LOGIN
+
+Options:
+  -f, --force                   force some actions that would fail otherwise
+                                e.g. removal of user still logged in
+                                or files, even if not owned by the user
+  -h, --help                    display this help message and exit
+  -r, --remove                  remove home directory and mail spool
+  -R, --root CHROOT_DIR         directory to chroot into
+  -Z, --selinux-user            remove any SELinux user mapping for the user
+
+[hduser@Inceptez home]$ sudo userdel -r mohan
+userdel: /var/spool/mail/mohan not owned by mohan, not removing
+userdel: /home/mohan not owned by mohan, not removing
+[hduser@Inceptez home]$ sudo userdel mohan
+userdel: user 'mohan' does not exist
+[hduser@Inceptez home]$ sudo userdel -d mrithyunjay
+userdel: invalid option -- 'd'
+Usage: userdel [options] LOGIN
+
+Options:
+  -f, --force                   force some actions that would fail otherwise
+                                e.g. removal of user still logged in
+                                or files, even if not owned by the user
+  -h, --help                    display this help message and exit
+  -r, --remove                  remove home directory and mail spool
+  -R, --root CHROOT_DIR         directory to chroot into
+  -Z, --selinux-user            remove any SELinux user mapping for the user
+
+[hduser@Inceptez home]$ cd /
+[hduser@Inceptez /]$ sudo userdel mohan
+userdel: user 'mohan' does not exist
+[hduser@Inceptez /]$ sudo userdel mrithyunjay
+[hduser@Inceptez /]$ ls -lrt
+total 104
+drwxr-xr-x.   2 root root  4096 Sep 23  2011 srv
+drwxr-xr-x.   2 root root  4096 Sep 23  2011 mnt
+drwx------.   2 root root 16384 Aug 14  2015 lost+found
+drwxr-xr-x.   2 root root  4096 Aug 14  2015 selinux
+drwxr-xr-x.  13 root root  4096 Aug 14  2015 usr
+dr-xr-xr-x.  11 root root  4096 Aug 14  2015 lib
+drwxr-xr-x.  22 root root  4096 Aug 14  2015 var
+drwxr-xr-x.   4 root root  4096 Aug 23  2015 opt
+dr-xr-xr-x.   5 root root  3072 Feb 13  2017 boot
+dr-xr-xr-x.   9 root root 12288 Feb 15  2017 lib64
+dr-xr-xr-x.   2 root root 12288 Mar 12  2017 sbin
+dr-xr-x---.   9 root root  4096 Jul 27 19:50 root
+dr-xr-xr-x  192 root root     0 Aug  2 07:37 proc
+drwxr-xr-x   13 root root     0 Aug  2 07:37 sys
+drwxr-xr-x    2 root root     0 Aug  2 07:38 misc
+drwxr-xr-x    2 root root     0 Aug  2 07:38 net
+drwxr-xr-x   20 root root  3820 Aug  2 07:38 dev
+drwxr-xr-x.   3 root root  4096 Aug  2 08:04 media
+dr-xr-xr-x.   2 root root  4096 Aug  2 08:14 bin
+drwxr-xr-x.   5 root root  4096 Aug  2 17:36 home
+drwxrwxrwt.  35 root root  4096 Aug  2 17:42 tmp
+drwxr-xr-x. 118 root root 12288 Aug  2 17:48 etc
+[hduser@Inceptez /]$ cd home
+[hduser@Inceptez home]$ pwd
+/home
+[hduser@Inceptez home]$ ls -lrt
+total 12
+drwxrwx---   4 hduser hduser 4096 Jul 27 12:52 mohan
+drwx------. 49 hduser hduser 4096 Aug  2 17:25 hduser
+drwx------   4    502    503 4096 Aug  2 17:36 mrithyunjay
+[hduser@Inceptez home]$ sudo userdel mrithyunjay
+userdel: user 'mrithyunjay' does not exist
+[hduser@Inceptez home]$ sudo userdel mohan
+userdel: user 'mohan' does not exist
+[hduser@Inceptez home]$ cd ~
+[hduser@Inceptez ~]$ pwd
+/home/hduser
+[hduser@Inceptez ~]$ cd /
+[hduser@Inceptez /]$ pwd
+/
+[hduser@Inceptez /]$ sudo userdel mrithyunjay
+userdel: user 'mrithyunjay' does not exist
+[hduser@Inceptez /]$ 
+
+[hduser@Inceptez /]$ sudo su -
+[root@Inceptez ~]# sudo userdel -r mohan
+userdel: user 'mohan' does not exist
+[root@Inceptez ~]# sudo userdel -r mrithyunjay
+userdel: user 'mrithyunjay' does not exist
+[root@Inceptez ~]# userdel -r mrithyunjay
+userdel: user 'mrithyunjay' does not exist
+[root@Inceptez ~]# userdel -r mohan
+userdel: user 'mohan' does not exist
+[root@Inceptez ~]# whoami
+root
+[root@Inceptez ~]# cat /etc/passwd | grep -i root
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+[root@Inceptez ~]# echo $PATH
+/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+[root@Inceptez ~]# echo $SHELL
+/bin/bash
+[root@Inceptez ~]# sudo rm -rf /home/mohan              #--(Goto root directory and user recursive & force command to remove user/directories and their contents recursively) 
+[root@Inceptez ~]# sudo rm -rf /home/mrithyunjay        #--(Goto root directory and user recursive & force command to remove user/directories and their contents recursively) 
+[root@Inceptez ~]# pwd
+/root
+[root@Inceptez ~]# whoami   
+root
+[root@Inceptez ~]#
